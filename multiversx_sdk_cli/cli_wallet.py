@@ -160,7 +160,8 @@ def convert_wallet(args: Any):
     if infile:
         input_text = infile.read_text()
     else:
-        print(f"Insert text below. Press 'Ctrl-D' (Linux / MacOS) or 'Ctrl-Z' (Windows) when done.")
+        if sys.stdout.isatty():
+            logger.info(f"Insert text below. Press 'Ctrl-D' (Linux / MacOS) or 'Ctrl-Z' (Windows) when done.")
         input_text = sys.stdin.read().strip()
 
     mnemonic, secret_key = _load_wallet(input_text, in_format, address_index)
@@ -169,8 +170,6 @@ def convert_wallet(args: Any):
     if outfile:
         outfile.write_text(output_text)
     else:
-        print("Output:")
-        print()
         print(output_text)
 
 
