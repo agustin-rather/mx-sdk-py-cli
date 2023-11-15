@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 from typing import Any, List
 
 from rich.logging import RichHandler
+from rich.console import Console
 
 import multiversx_sdk_cli.cli_accounts
 import multiversx_sdk_cli.cli_config
@@ -43,10 +44,11 @@ def _do_main(cli_args: List[str]):
     parser = setup_parser(argv_with_config_args)
     args = parser.parse_args(argv_with_config_args)
 
+    rich_handler = RichHandler(show_time=False, rich_tracebacks=True, console=Console(stderr=True))
     if args.verbose:
-        logging.basicConfig(level="DEBUG", force=True, format='%(name)s: %(message)s', handlers=[RichHandler(show_time=False, rich_tracebacks=True)])
+        logging.basicConfig(level="DEBUG", force=True, format='%(name)s: %(message)s', handlers=[rich_handler])
     else:
-        logging.basicConfig(level="INFO", format='%(name)s: %(message)s', handlers=[RichHandler(show_time=False, rich_tracebacks=True)])
+        logging.basicConfig(level="INFO", format='%(name)s: %(message)s', handlers=[rich_handler])
 
     verify_deprecated_entries_in_config_file()
 
