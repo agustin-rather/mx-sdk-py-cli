@@ -289,7 +289,7 @@ class Rust(DependencyModule):
 
         self._install_rust(tag)
         self._install_sc_meta()
-        self._install_wasm_opt()
+        #self._install_wasm_opt()
         self._install_twiggy()
 
     def _check_install_env(self, apply_correction: bool = True):
